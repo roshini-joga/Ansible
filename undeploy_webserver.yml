@@ -1,0 +1,20 @@
+---
+- name: Undeploy webserver on VM1 and VM2
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Stop Apache service
+      service:
+        name: apache2
+        state: stopped
+        enabled: no
+
+    - name: Uninstall Apache
+      apt:
+        name: apache2
+        state: absent
+
+    - name: Remove custom web page
+      file:
+        path: /var/www/html/index.html
+        state: absent
